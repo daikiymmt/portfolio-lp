@@ -39,7 +39,7 @@ export default function Footer() {
           {/* Social */}
           <div className="flex justify-center md:justify-end gap-4">
             <a
-              href="https://github.com/daiki-yamamoto"
+              href="https://github.com/daikiymmt"
               target="_blank"
               rel="noopener noreferrer"
               className="text-muted hover:text-primary font-mono text-sm transition-colors"
