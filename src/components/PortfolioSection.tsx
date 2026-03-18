@@ -1,5 +1,19 @@
 const projects = [
   {
+    title: "dwt",
+    description: "Git worktreeとDocker Composeを連携するCLIツール。ブランチごとにコード・DB・キャッシュボリュームを切り替え、並行開発を効率化。",
+    tags: ["Go", "Docker", "CLI"],
+    role: "Personal OSS",
+    github: "https://github.com/daikiymmt/dwt",
+  },
+  {
+    title: "research-system",
+    description: "Google Scholarからの論文自動発見、PDF監視、AI要約を組み合わせた研究支援システム。Claude Codeプラグインとして動作。",
+    tags: ["Python", "Claude API", "Google Scholar"],
+    role: "Personal OSS",
+    github: "https://github.com/daikiymmt/research-system",
+  },
+  {
     title: "フードデリバリーSaaS",
     description: "飲食店向けデリバリー管理プラットフォーム。注文管理、配達設定、メニュー管理機能を開発。Go + React/TypeScriptでのフルスタック開発。",
     tags: ["Go", "React", "TypeScript", "AWS", "PostgreSQL"],
@@ -56,7 +70,13 @@ export default function PortfolioSection() {
             {/* Project info */}
             <div className="mb-4">
               <h3 className="text-light font-mono font-bold text-lg mb-2 group-hover:text-primary transition-colors">
-                {project.title}
+                {"github" in project && project.github ? (
+                  <a href={project.github} target="_blank" rel="noopener noreferrer" className="hover:underline">
+                    {project.title} <span className="text-muted text-sm">↗</span>
+                  </a>
+                ) : (
+                  project.title
+                )}
               </h3>
               <p className="text-muted text-sm font-mono leading-relaxed">
                 {project.description}
