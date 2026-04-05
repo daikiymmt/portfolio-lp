@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { getPostBySlug, getAllPosts, getReadingTime, formatDate } from "@/lib/posts";
@@ -13,13 +14,23 @@ export async function generateStaticParams() {
   }));
 }
 
-export async function generateMetadata({ params }: Props) {
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
   const post = getPostBySlug(slug);
   if (!post) return { title: "Not Found" };
   return {
     title: `${post.title} | Daiki Yamamoto`,
     description: post.excerpt,
+    openGraph: {
+      title: `${post.title} | Daiki Yamamoto`,
+      description: post.excerpt,
+      type: "article",
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: `${post.title} | Daiki Yamamoto`,
+      description: post.excerpt,
+    },
   };
 }
 
