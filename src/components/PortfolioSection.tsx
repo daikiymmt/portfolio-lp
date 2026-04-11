@@ -3,23 +3,30 @@ type Project = {
   description: string;
   tags: string[];
   role: string;
-  github?: string;
+  link?: string;
 };
 
 const personalProjects: Project[] = [
+  {
+    title: "ペット予防接種リマインダー",
+    description: "犬と猫の予防接種スケジュールを管理するモバイルアプリ。接種予定日のプッシュ通知、オフライン対応、広告なし。Rork (Expo) で開発し、LPも自作。",
+    tags: ["React Native", "Expo", "TypeScript", "Rork"],
+    role: "App",
+    link: "https://pet-vaccine-tracker.com/",
+  },
   {
     title: "dwt",
     description: "Git worktreeとDocker Composeを連携するCLIツール。ブランチごとにコード・DB・キャッシュボリュームを切り替え、並行開発を効率化。",
     tags: ["Go", "Docker", "CLI"],
     role: "Personal OSS",
-    github: "https://github.com/daikiymmt/dwt",
+    link: "https://github.com/daikiymmt/dwt",
   },
   {
     title: "research-system",
     description: "Google Scholarからの論文自動発見、PDF監視、AI要約を組み合わせた研究支援システム。Claude Codeプラグインとして動作。",
     tags: ["Python", "Claude API", "Google Scholar"],
     role: "Personal OSS",
-    github: "https://github.com/daikiymmt/research-system",
+    link: "https://github.com/daikiymmt/research-system",
   },
 ];
 
@@ -75,9 +82,9 @@ function ProjectCard({ project, prefix, index }: ProjectCardProps) {
       {/* Project info */}
       <div className="mb-4">
         <h3 className="text-light font-mono font-bold text-lg mb-2 group-hover:text-primary transition-colors">
-          {project.github ? (
+          {project.link ? (
             <a
-              href={project.github}
+              href={project.link}
               target="_blank"
               rel="noopener noreferrer"
               className="hover:underline"
