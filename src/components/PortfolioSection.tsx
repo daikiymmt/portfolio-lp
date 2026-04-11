@@ -1,4 +1,12 @@
-const projects = [
+type Project = {
+  title: string;
+  description: string;
+  tags: string[];
+  role: string;
+  github?: string;
+};
+
+const personalProjects: Project[] = [
   {
     title: "dwt",
     description: "Git worktreeとDocker Composeを連携するCLIツール。ブランチごとにコード・DB・キャッシュボリュームを切り替え、並行開発を効率化。",
@@ -13,6 +21,9 @@ const projects = [
     role: "Personal OSS",
     github: "https://github.com/daikiymmt/research-system",
   },
+];
+
+const workProjects: Project[] = [
   {
     title: "フードデリバリーSaaS",
     description: "飲食店向けデリバリー管理プラットフォーム。注文管理、配達設定、メニュー管理機能を開発。Go + React/TypeScriptでのフルスタック開発。",
@@ -39,73 +50,127 @@ const projects = [
   },
 ];
 
+type ProjectCardProps = {
+  project: Project;
+  prefix: string;
+  index: number;
+};
+
+function ProjectCard({ project, prefix, index }: ProjectCardProps) {
+  return (
+    <div className="card group hover:border-primary/50">
+      {/* Terminal header */}
+      <div className="flex items-center justify-between mb-4 pb-3 border-b border-gray-800">
+        <div className="flex items-center gap-2">
+          <span className="w-2 h-2 rounded-full bg-red-500"></span>
+          <span className="w-2 h-2 rounded-full bg-yellow-500"></span>
+          <span className="w-2 h-2 rounded-full bg-green-500"></span>
+          <span className="ml-2 text-muted font-mono text-xs">
+            {prefix}_{index + 1}
+          </span>
+        </div>
+        <span className="text-xs font-mono text-secondary">[{project.role}]</span>
+      </div>
+
+      {/* Project info */}
+      <div className="mb-4">
+        <h3 className="text-light font-mono font-bold text-lg mb-2 group-hover:text-primary transition-colors">
+          {project.github ? (
+            <a
+              href={project.github}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="hover:underline"
+            >
+              {project.title} <span className="text-muted text-sm">↗</span>
+            </a>
+          ) : (
+            project.title
+          )}
+        </h3>
+        <p className="text-muted text-sm font-mono leading-relaxed">
+          {project.description}
+        </p>
+      </div>
+
+      {/* Tags */}
+      <div className="flex flex-wrap gap-2">
+        {project.tags.map((tag) => (
+          <span
+            key={tag}
+            className="px-2 py-1 border border-gray-700 text-xs font-mono text-muted"
+          >
+            {tag}
+          </span>
+        ))}
+      </div>
+    </div>
+  );
+}
+
 export default function PortfolioSection() {
   return (
     <section id="portfolio" className="section-container bg-dark relative">
-      {/* Section header */}
-      <div className="text-center mb-12">
-        <span className="text-muted font-mono text-sm">{"// portfolio"}</span>
-        <h2 className="section-title mt-2">
-          <span className="text-light">{"<"}</span>
-          Works
-          <span className="text-light">{" />"}</span>
-        </h2>
+      {/* Personal / OSS subsection */}
+      <div className="mb-20">
+        <div className="text-center mb-12">
+          <span className="text-muted font-mono text-sm">{"// personal"}</span>
+          <h2 className="section-title mt-2">
+            <span className="text-light">{"<"}</span>
+            Personal
+            <span className="text-light">{" />"}</span>
+          </h2>
+          <p className="text-muted font-mono text-xs mt-3">
+            個人開発 / OSS プロジェクト
+          </p>
+        </div>
+
+        <div className="grid md:grid-cols-2 gap-6">
+          {personalProjects.map((project, index) => (
+            <ProjectCard
+              key={project.title}
+              project={project}
+              prefix="personal"
+              index={index}
+            />
+          ))}
+        </div>
       </div>
 
-      {/* Projects grid */}
-      <div className="grid md:grid-cols-2 gap-6">
-        {projects.map((project, index) => (
-          <div key={index} className="card group hover:border-primary/50">
-            {/* Terminal header */}
-            <div className="flex items-center justify-between mb-4 pb-3 border-b border-gray-800">
-              <div className="flex items-center gap-2">
-                <span className="w-2 h-2 rounded-full bg-red-500"></span>
-                <span className="w-2 h-2 rounded-full bg-yellow-500"></span>
-                <span className="w-2 h-2 rounded-full bg-green-500"></span>
-                <span className="ml-2 text-muted font-mono text-xs">project_{index + 1}</span>
-              </div>
-              <span className="text-xs font-mono text-secondary">[{project.role}]</span>
-            </div>
+      {/* Works subsection */}
+      <div>
+        <div className="text-center mb-12">
+          <span className="text-muted font-mono text-sm">{"// works"}</span>
+          <h2 className="section-title mt-2">
+            <span className="text-light">{"<"}</span>
+            Works
+            <span className="text-light">{" />"}</span>
+          </h2>
+          <p className="text-muted font-mono text-xs mt-3">
+            業務での開発プロジェクト
+          </p>
+        </div>
 
-            {/* Project info */}
-            <div className="mb-4">
-              <h3 className="text-light font-mono font-bold text-lg mb-2 group-hover:text-primary transition-colors">
-                {"github" in project && project.github ? (
-                  <a href={project.github} target="_blank" rel="noopener noreferrer" className="hover:underline">
-                    {project.title} <span className="text-muted text-sm">↗</span>
-                  </a>
-                ) : (
-                  project.title
-                )}
-              </h3>
-              <p className="text-muted text-sm font-mono leading-relaxed">
-                {project.description}
-              </p>
-            </div>
+        <div className="grid md:grid-cols-2 gap-6">
+          {workProjects.map((project, index) => (
+            <ProjectCard
+              key={project.title}
+              project={project}
+              prefix="work"
+              index={index}
+            />
+          ))}
+        </div>
 
-            {/* Tags */}
-            <div className="flex flex-wrap gap-2">
-              {project.tags.map((tag) => (
-                <span
-                  key={tag}
-                  className="px-2 py-1 border border-gray-700 text-xs font-mono text-muted"
-                >
-                  {tag}
-                </span>
-              ))}
-            </div>
+        {/* More projects hint */}
+        <div className="text-center mt-10">
+          <div className="inline-block border border-gray-800 px-6 py-3">
+            <span className="text-muted font-mono text-sm">
+              <span className="text-secondary">$</span> git log --oneline | wc -l
+              <br />
+              <span className="text-primary">→ more projects available on request</span>
+            </span>
           </div>
-        ))}
-      </div>
-
-      {/* More projects hint */}
-      <div className="text-center mt-10">
-        <div className="inline-block border border-gray-800 px-6 py-3">
-          <span className="text-muted font-mono text-sm">
-            <span className="text-secondary">$</span> git log --oneline | wc -l
-            <br />
-            <span className="text-primary">→ more projects available on request</span>
-          </span>
         </div>
       </div>
     </section>
